@@ -1,0 +1,87 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:bzv="http://intesasanpaolo.com/cos2noc" elementFormDefault="qualified" 
+	targetNamespace="http://intesasanpaolo.com/cos2noc" version="1.0">
+		<!-- reasonType describes the reason for which an event is generated  -->
+		<xs:simpleType name="reasonType">
+				<xs:restriction base="xs:string">
+					<!-- abend -->
+					<xs:enumeration value="A"/>
+					<!-- infligth -->
+					<xs:enumeration value="I"/>
+					<!-- old -->
+					<xs:enumeration value="O"/>
+					<!-- tempi di risposta -->
+					<xs:enumeration value="R"/>
+					<!-- unmanaged, valori non disponibili, ripete gli ultimi campioni -->
+					<xs:enumeration value="U"/>
+					<!-- volumi -->
+					<xs:enumeration value="V"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:element name="processBizEventRequest" type="bzv:processBizEventRequest"/>
+			<xs:element name="processBizEventResponse" type="bzv:processBizEventResponse"/>
+			<xs:complexType name="processBizEventRequest">
+				<xs:sequence>
+					<xs:element name="batchid" type="xs:int"/>
+					<xs:element name="total" type="xs:int"/>
+					<xs:element name="batchtimestamp" type="xs:dateTime"/>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="bizEventList" nillable="true" type="bzv:bizEvent"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="bizEvent">
+				<xs:sequence>
+					<xs:element name="codicecanale" type="xs:string"/>
+					<xs:element name="codicebanca" type="xs:string"/>
+					<xs:element name="bizservice" type="xs:string"/>
+					<xs:element name="abend" type="xs:int"/>
+					<xs:element name="volumi" type="xs:int"/>
+					<xs:element name="inflight" type="xs:int"/>
+					<xs:element name="old" type="xs:int"/>
+					<xs:element name="tempirisposta" type="xs:int"/>
+					<xs:element name="eventtimestamp" type="xs:dateTime"/>
+					<xs:element minOccurs="1" maxOccurs="5" name="reason" type="bzv:reasonType"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="bizEventProcessResult">
+				<xs:sequence>
+					<xs:element name="codicecanale" type="xs:string"/>
+					<xs:element name="codicebanca" type="xs:string"/>
+					<xs:element name="bizservice" type="xs:string"/>
+					<xs:element name="result" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="processBizEventResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="processResult" type="bzv:bizEventProcessResult"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="setModelRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="entries" type="bzv:model"></xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="setModelResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="response" type="xs:string" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		
+		<xs:complexType name="model">
+				<xs:sequence>
+					<xs:element name="entry" type="bzv:modelEntry" maxOccurs="unbounded"></xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="modelEntry">
+				<xs:sequence>
+					<xs:element name="codiceCanale" type="xs:string"></xs:element>
+					<xs:element name="codiceBanca" type="xs:string"></xs:element>
+					<xs:element name="bizService" type="xs:string"></xs:element>
+					<xs:element name="descrizioneCanale" type="xs:string"/>
+					<xs:element name="descrizioneBanca" type="xs:string"></xs:element>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>

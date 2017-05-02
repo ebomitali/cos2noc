@@ -1,0 +1,17 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cos="http://intesasanpaolo.com/cos2noc">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <cos:setModelRequest>
+         <cos:entries>
+            <!--1 or more repetitions:-->
+            <cos:entry>
+               <cos:codiceCanale>01</cos:codiceCanale>
+               <cos:codiceBanca>02</cos:codiceBanca>
+               <cos:bizService>YUYUY</cos:bizService>
+               <cos:descrizioneCanale>Canale</cos:descrizioneCanale>
+               <cos:descrizioneBanca>Banca</cos:descrizioneBanca>
+            </cos:entry>
+         </cos:entries>
+      </cos:setModelRequest>
+   </soapenv:Body>
+</soapenv:Envelope>
